@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #D7D7D7;
+}
+
+/* AREA DO HEADER */
+
+header {
+    background-color: black;
+    color: white;
+}
+
+header .menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: auto;
+}
+
+header .menu .logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+header .menu .logo .img-logo {
+    width: 50px;
+    height: 50px;
+    background-image: url(image/logo.png);
+    background-size: contain;
+    background-position: center;
+}
+
+header .menu .logo p {
+    font-size: 22px;
+}
+
+header nav ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+
+header nav ul a {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 20px 20px;
+    font-size: 20px;
+    border-bottom: 4px solid black;
+    transition: all 0.2s ease-in;
+}
+
+header nav ul a:hover {
+    border-bottom: 4px solid #548235;
+    background-color: #323131;
+}
+
+
+/* AREA DO MAIN */
+
+
+main {
+    margin: auto;
+}
+
+.container {
+    max-width: 1100px;
+}
+
+section {
+    display: flex;
+    height: calc(100vh - 67px);
+    width: 100%;
+}
+
+main section .titulo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+main section .titulo .texto h1{
+    font-size: 52px;
+}
+
+main section .titulo .texto p{
+    font-size: 24px;
+}
+
+main section .imagem-banner {
+    background-image: url(image/imagem-banner.jpg);
+    height: 100%;
+    flex: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
