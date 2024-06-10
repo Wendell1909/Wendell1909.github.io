@@ -8,6 +8,12 @@ body {
     background-color: #D7D7D7;
 }
 
+.whats {
+    position: fixed;
+    right: 40px;
+    bottom: 20px;
+}
+
 /* AREA DO HEADER */
 
 header {
@@ -19,8 +25,8 @@ header .menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1100px;
     margin: auto;
+    padding: 0 50px;
 }
 
 header .menu .logo {
@@ -66,43 +72,64 @@ header nav ul a:hover {
 }
 
 
-/* AREA DO MAIN */
+/* AREA DO BANNER */
 
 
 main {
     margin: auto;
 }
 
-.container {
-    max-width: 1100px;
-}
-
-section {
+.banner {
     display: flex;
     height: calc(100vh - 67px);
     width: 100%;
 }
 
-main section .titulo {
+main .banner .titulo {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-main section .titulo .texto h1{
+main .banner .titulo .texto h1{
     font-size: 52px;
 }
 
-main section .titulo .texto p{
+main .banner .titulo .texto p{
     font-size: 24px;
 }
 
-main section .imagem-banner {
+main .banner .imagem-banner {
     background-image: url(image/imagem-banner.jpg);
     height: 100%;
     flex: 1;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+}
+
+/* SOBRE NÓS */
+
+main .sobre-nos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #548235;
+    color: #1c1c1c;
+}
+
+main .sobre-nos .descricao {
+    width: 800px;
+    text-align: center;
+    padding: 30px 0;
+}
+
+main .sobre-nos .descricao h1 {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+main .sobre-nos .descricao p {
+    font-size: 18px;
 }
