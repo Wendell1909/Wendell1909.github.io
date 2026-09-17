@@ -1,0 +1,725 @@
+/*
+  DELÍCIAS DA BETY — ESTILOS DO CARDÁPIO
+  Este arquivo usa as classes e os IDs de index.html.
+  Os comentários numerados servem como um mapa para estudar e editar.
+  CSS cuida da apresentação; app.js cuida dos cálculos e das interações.
+*/
+
+/* 1. VARIÁVEIS: cores, fontes e medidas que podemos reutilizar. */
+:root {
+  --cor-fundo: #fff8f0;
+  --cor-superficie: #ffffff;
+  --cor-suave: #f9efe5;
+  --cor-marca: #933f2c;
+  --cor-marca-escura: #702e20;
+  --cor-marca-clara: #f5e3d8;
+  --cor-caramelo: #d69d66;
+  --cor-texto: #33251f;
+  --cor-texto-suave: #6c574b;
+  --cor-borda: #dfcabc;
+  --cor-borda-campo: #a58b7b;
+  --cor-foco: #165f9e;
+  --cor-whatsapp: #176b43;
+  --cor-whatsapp-escura: #105032;
+  --cor-desativado-fundo: #eee5dc;
+  --cor-desativado-texto: #735e51;
+  --fonte-texto: Arial, Helvetica, sans-serif;
+  --fonte-titulo: Georgia, "Times New Roman", serif;
+  --largura-maxima: 72rem;
+  --raio: 0.75rem;
+  --raio-grande: 1.25rem;
+  --sombra: 0 0.375rem 1.5rem rgb(51 37 31 / 7%);
+}
+
+/* 2. BASE: tamanho das caixas, margens e tipografia. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
+}
+
+body {
+  margin: 0;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+dl,
+dd {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo);
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.75rem;
+}
+
+h3 {
+  font-size: 1.375rem;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+a {
+  color: var(--cor-marca);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--cor-marca-escura);
+}
+
+/* 3. ACESSIBILIDADE: foco visível e atalho para quem usa teclado. */
+:focus-visible {
+  outline: 3px solid var(--cor-foco);
+  outline-offset: 3px;
+}
+
+.pular-conteudo {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 1000;
+  max-width: calc(100% - 2rem);
+  padding: 0.75rem 1rem;
+  border-radius: var(--raio);
+  background-color: var(--cor-superficie);
+  color: var(--cor-marca);
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+
+.pular-conteudo:focus {
+  transform: translateY(0);
+}
+
+/* 4. ESTRUTURA: conteúdo centralizado e seções em uma coluna no celular. */
+.container {
+  width: calc(100% - 2rem);
+  max-width: var(--largura-maxima);
+  margin-inline: auto;
+}
+
+main.container {
+  display: grid;
+  gap: 1.5rem;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.secao {
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-grande);
+  background-color: var(--cor-superficie);
+  box-shadow: var(--sombra);
+}
+
+.secao > h2 + p {
+  margin-top: 0.5rem;
+  color: var(--cor-texto-suave);
+}
+
+/* 5. CABEÇALHO: identidade em terracota e navegação que pode quebrar linha. */
+.cabecalho {
+  padding: 2rem 0 1.75rem;
+  border-bottom: 5px solid var(--cor-caramelo);
+  background-color: var(--cor-marca);
+  color: var(--cor-fundo);
+}
+
+.nome-loja {
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  font-weight: 700;
+}
+
+.cabecalho .container > p:first-of-type {
+  margin-top: 0.75rem;
+}
+
+.navegacao ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+
+.navegacao a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--cor-caramelo);
+  border-radius: 2rem;
+  color: var(--cor-fundo);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.navegacao a:hover {
+  background-color: var(--cor-marca-escura);
+  color: var(--cor-fundo);
+}
+
+.navegacao a:focus-visible {
+  outline-color: var(--cor-fundo);
+}
+
+.aviso {
+  margin-top: 1.25rem;
+  padding: 0.875rem 1rem;
+  border-left: 4px solid var(--cor-caramelo);
+  border-radius: var(--raio);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-size: 0.875rem;
+}
+
+/* 6. PRODUTOS: Grid organiza os cards; Flexbox organiza o interior de cada um. */
+.lista-produtos {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.produto {
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  min-width: 0;
+  padding: 1.25rem;
+  border: 1px solid var(--cor-borda);
+  border-top: 4px solid var(--cor-marca);
+  border-radius: var(--raio);
+  background-color: var(--cor-fundo);
+}
+
+.produto-nome {
+  color: var(--cor-marca-escura);
+}
+
+.produto-descricao {
+  color: var(--cor-texto-suave);
+}
+
+.produto-preco {
+  margin-top: auto;
+  padding-top: 0.25rem;
+  color: var(--cor-texto-suave);
+  font-size: 0.9375rem;
+}
+
+.produto-preco strong {
+  display: block;
+  color: var(--cor-marca);
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 7. BOTÕES: aparência comum, variação do WhatsApp e estado desativado. */
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  border-radius: var(--raio);
+  background-color: var(--cor-marca);
+  color: var(--cor-superficie);
+  font-weight: 700;
+  line-height: 1.4;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.botao:not(:disabled):hover {
+  background-color: var(--cor-marca-escura);
+}
+
+.botao-whatsapp {
+  background-color: var(--cor-whatsapp);
+}
+
+.botao-whatsapp:not(:disabled):hover {
+  background-color: var(--cor-whatsapp-escura);
+}
+
+.botao:disabled {
+  border-color: var(--cor-borda);
+  background-color: var(--cor-desativado-fundo);
+  color: var(--cor-desativado-texto);
+  cursor: not-allowed;
+}
+
+/* 8. FORMULÁRIOS: grupos, rótulos e campos de texto. */
+form {
+  display: grid;
+  gap: 1.25rem;
+}
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+}
+
+legend {
+  max-width: 100%;
+  padding: 0 0.375rem;
+  color: var(--cor-marca-escura);
+  font-weight: 700;
+}
+
+.campo {
+  min-width: 0;
+}
+
+.campo > label,
+fieldset > label,
+#revisao > label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+fieldset > div + div,
+fieldset > p + div {
+  margin-top: 0.75rem;
+}
+
+fieldset > p {
+  margin-top: 0.75rem;
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+/* A lista de tipos preserva os rádios, checkboxes e o input oculto do HTML. */
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+input[type="date"],
+input[type="time"],
+select,
+textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 3rem;
+  padding: 0.75rem;
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: var(--raio);
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--cor-texto-suave);
+  opacity: 1;
+}
+
+textarea {
+  display: block;
+  resize: vertical;
+}
+
+textarea[readonly] {
+  background-color: var(--cor-suave);
+}
+
+#produto-quantidade {
+  max-width: 9rem;
+}
+
+#pedido-troco {
+  max-width: 14rem;
+}
+
+/* 9. ESCOLHAS: controles nativos e destaque do rótulo marcado, sem JavaScript. */
+input[type="radio"],
+input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0 0.375rem 0 0;
+  vertical-align: middle;
+  accent-color: var(--cor-marca);
+  cursor: pointer;
+}
+
+input[type="radio"] + label,
+input[type="checkbox"] + label {
+  display: inline-block;
+  max-width: calc(100% - 2rem);
+  padding: 0.625rem;
+  border-radius: 0.5rem;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+input[type="radio"]:checked + label,
+input[type="checkbox"]:checked + label {
+  background-color: var(--cor-marca-clara);
+  color: var(--cor-marca-escura);
+}
+
+/* 10. PERSONALIZAÇÃO E CARRINHO: avisos, seleção e valores. */
+/* Os fieldsets agora ficam dentro deste espaço preenchido pelo JavaScript. */
+#produto-grupos {
+  display: grid;
+  gap: 1.25rem;
+}
+
+#produto-selecionado {
+  display: inline-block;
+  margin-top: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--raio);
+  background-color: var(--cor-marca-clara);
+  color: var(--cor-marca-escura);
+  font-family: var(--fonte-texto);
+  font-size: 1rem;
+}
+
+#aviso-personalizacao,
+#aviso-formulario {
+  margin: 1rem 0 1.5rem;
+  padding: 0.875rem 1rem;
+  border-left: 3px solid var(--cor-caramelo);
+  border-radius: var(--raio);
+  background-color: var(--cor-suave);
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+#formulario-produto > p {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 1rem;
+  border-radius: var(--raio);
+  background-color: var(--cor-suave);
+}
+
+#produto-total {
+  color: var(--cor-marca);
+}
+
+#carrinho-vazio {
+  margin-top: 1.25rem;
+  padding: 1.5rem 1rem;
+  border: 1px dashed var(--cor-borda-campo);
+  border-radius: var(--raio);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-suave);
+  text-align: center;
+}
+
+.itens-carrinho {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.itens-carrinho:empty {
+  display: none;
+}
+
+.carrinho > p {
+  margin-top: 1rem;
+}
+
+/* Itens criados na aula do carrinho. */
+.item-carrinho {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background-color: var(--cor-fundo);
+}
+
+.item-carrinho h3 {
+  font-size: 1.125rem;
+}
+
+.item-detalhes {
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.item-detalhes,
+.item-observacao,
+.ajuda-carrinho {
+  color: var(--cor-texto-suave);
+  font-size: 0.875rem;
+}
+
+.quantidade-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.botao-quantidade {
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0.25rem;
+  font-size: 1.125rem;
+}
+
+.botao-remover {
+  border-color: var(--cor-marca);
+  background-color: transparent;
+  color: var(--cor-marca);
+}
+
+.botao-remover:not(:disabled):hover {
+  background-color: var(--cor-marca-clara);
+  color: var(--cor-marca-escura);
+}
+
+#mensagem-carrinho {
+  margin-top: 0;
+}
+
+#mensagem-carrinho:not(:empty) {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: var(--raio);
+  background-color: var(--cor-marca-clara);
+  color: var(--cor-marca-escura);
+}
+
+.valores-pedido {
+  margin: 1.25rem 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.valores-pedido > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 0;
+}
+
+.valores-pedido dd {
+  text-align: right;
+  font-weight: 700;
+}
+
+.valores-pedido > div:last-child {
+  border-top: 1px solid var(--cor-borda);
+  color: var(--cor-marca-escura);
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.carrinho > a {
+  display: block;
+  margin-top: 0.75rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+
+/* 11. FINALIZAÇÃO, REVISÃO E RODAPÉ. */
+/* Novidade da aula de entrega e retirada. */
+#aviso-recebimento {
+  padding: 0.875rem;
+  border-left: 3px solid var(--cor-caramelo);
+  border-radius: var(--raio);
+  background-color: var(--cor-suave);
+}
+
+#tipo-retirada:disabled + label,
+#tipo-entrega:disabled + label {
+  color: var(--cor-desativado-texto);
+  cursor: not-allowed;
+}
+
+#formulario-pedido > p {
+  color: var(--cor-texto-suave);
+}
+
+#resumo-pedido {
+  margin: 1.25rem 0;
+}
+
+#aviso-validacao:empty,
+#aviso-whatsapp:empty,
+#aviso-armazenamento:empty {
+  display: none;
+}
+
+#aviso-validacao:not(:empty),
+#aviso-whatsapp:not(:empty),
+#aviso-armazenamento:not(:empty) {
+  padding: 0.875rem;
+  border-left: 3px solid var(--cor-caramelo);
+  background-color: var(--cor-suave);
+  font-weight: 700;
+}
+
+#ajuda-troco {
+  margin-top: 0.5rem;
+  color: var(--cor-texto-suave);
+}
+
+.texto-revisao {
+  padding: 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  background-color: var(--cor-suave);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font: inherit;
+}
+
+#revisao > p,
+#revisao > .botao {
+  margin-top: 1rem;
+}
+
+.rodape {
+  padding: 2rem 0;
+  border-top: 1px solid var(--cor-borda);
+  background-color: var(--cor-suave);
+}
+
+.rodape h2 {
+  font-size: 1.5rem;
+}
+
+.rodape p,
+.rodape address {
+  margin-top: 0.625rem;
+  color: var(--cor-texto-suave);
+}
+
+.rodape address {
+  font-style: normal;
+}
+
+.rodape a {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 0;
+  font-weight: 700;
+}
+
+/* 12. RESPONSIVIDADE: a base é uma coluna; ampliamos quando há espaço. */
+/* 40rem costuma equivaler a 640px com tamanho de fonte inicial de 16px. */
+@media (min-width: 40rem) {
+  .secao {
+    padding: 1.75rem;
+  }
+
+  .lista-produtos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+/* 64rem costuma equivaler a 1024px. O carrinho acompanha a personalização. */
+@media (min-width: 64rem) {
+  main.container {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    align-items: start;
+  }
+
+  #cardapio,
+  #finalizacao,
+  #revisao {
+    grid-column: 1 / -1;
+  }
+
+  .lista-produtos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  #formulario-pedido {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  #formulario-pedido > .campo,
+  #formulario-pedido > p,
+  #formulario-pedido > .botao,
+  #campos-entrega {
+    grid-column: 1 / -1;
+  }
+
+  #campos-entrega {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  #campos-entrega > .campo {
+    margin-top: 0;
+  }
+}
+
+/* Sticky só em telas largas e suficientemente altas; não cobre o conteúdo. */
+@media (min-width: 64rem) and (min-height: 50rem) {
+  .carrinho {
+    position: sticky;
+    top: 1.5rem;
+  }
+}
+
+/* 13. PREFERÊNCIAS E VISIBILIDADE: respeita movimento reduzido e o HTML. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .botao {
+    transition: none;
+  }
+}
+
+/* Exceção intencional: uma regra visual nunca deve revelar um bloco hidden. */
+[hidden] {
+  display: none !important;
+}

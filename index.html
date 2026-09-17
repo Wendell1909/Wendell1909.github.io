@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pães, doces e salgados da Delícias da Bety no Boqueirão, Curitiba. Personalize seu pedido e converse pelo WhatsApp.">
+    <title>Delícias da Bety | Cardápio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="config.js" defer></script>
+    <script src="app.js" defer></script>
+    <!-- A ordem importa: app.js usa os dados carregados por config.js. -->
+  </head>
+
+  <body>
+    <!-- 1. CABEÇALHO: identificação e navegação. -->
+    <a class="pular-conteudo" href="#conteudo">Pular para o conteúdo</a>
+
+    <header class="cabecalho" id="topo">
+      <div class="container">
+        <h1 class="nome-loja">Delícias da Bety</h1>
+        <p id="descricao-loja">Pães, doces e salgados no Boqueirão, Curitiba.</p>
+        <nav class="navegacao" aria-label="Navegação principal">
+          <ul>
+            <li><a href="#cardapio">Cardápio</a></li>
+            <li><a href="#carrinho">Carrinho</a></li>
+            <li><a href="#finalizacao">Dados do pedido</a></li>
+            <li><a href="#informacoes">Informações da loja</a></li>
+          </ul>
+        </nav>
+        <noscript><p class="aviso">Ative o JavaScript do navegador para personalizar os produtos.</p></noscript>
+      </div>
+    </header>
+
+    <main class="container" id="conteudo">
+      <!-- 2. CARDÁPIO: os seis produtos ficam visíveis sem JavaScript. -->
+      <section class="secao" id="cardapio" aria-labelledby="titulo-cardapio">
+        <h2 id="titulo-cardapio">Nosso cardápio</h2>
+        <p>Preços base. Tamanhos, sabores e adicionais poderão alterar o valor.</p>
+
+        <div class="lista-produtos" id="lista-produtos">
+          <article class="produto" data-produto-id="pao-caseiro">
+            <h3 class="produto-nome">Pão caseiro</h3>
+            <p class="produto-descricao">Pão para o café da manhã ou da tarde. Opções de 500 g e 800 g.</p>
+            <p class="produto-preco">A partir de <strong>R$ 14,00</strong></p>
+            <button class="botao botao-personalizar" type="button" data-produto-id="pao-caseiro" disabled>Personalizar pão caseiro</button>
+          </article>
+
+          <article class="produto" data-produto-id="cueca-virada">
+            <h3 class="produto-nome">Cueca virada</h3>
+            <p class="produto-descricao">Porções de 6, 12 ou 20 unidades, com opções de cobertura.</p>
+            <p class="produto-preco">A partir de <strong>R$ 12,00</strong></p>
+            <button class="botao botao-personalizar" type="button" data-produto-id="cueca-virada" disabled>Personalizar cueca virada</button>
+          </article>
+
+          <article class="produto" data-produto-id="esfirra-bandeja">
+            <h3 class="produto-nome">Esfirra de bandeja</h3>
+            <p class="produto-descricao">Bandejas P, M e G, com diferentes recheios e adicionais.</p>
+            <p class="produto-preco">A partir de <strong>R$ 29,00</strong></p>
+            <button class="botao botao-personalizar" type="button" data-produto-id="esfirra-bandeja" disabled>Personalizar esfirra</button>
+          </article>
+
+          <article class="produto" data-produto-id="doguinho-bandeja">
+            <h3 class="produto-nome">Doguinho de bandeja</h3>
+            <p class="produto-descricao">Massa recheada com salsicha e molho. Bandejas P, M e G.</p>
+            <p class="produto-preco">A partir de <strong>R$ 31,00</strong></p>
+            <button class="botao botao-personalizar" type="button" data-produto-id="doguinho-bandeja" disabled>Personalizar doguinho</button>
+          </article>
+
+          <article class="produto" data-produto-id="bauru-bandeja">
+            <h3 class="produto-nome">Bauru de bandeja</h3>
+            <p class="produto-descricao">Recheios de presunto e queijo, frango ou calabresa. Bandejas P, M e G.</p>
+            <p class="produto-preco">A partir de <strong>R$ 33,00</strong></p>
+            <button class="botao botao-personalizar" type="button" data-produto-id="bauru-bandeja" disabled>Personalizar bauru</button>
+          </article>
+
+          <article class="produto" data-produto-id="sonho-doce-leite">
+            <h3 class="produto-nome">Sonho de doce de leite</h3>
+            <p class="produto-descricao">Unidade ou caixas com 4, 6 ou 12 sonhos.</p>
+            <p class="produto-preco">A partir de <strong>R$ 7,00</strong></p>
+            <button class="botao botao-personalizar" type="button" data-produto-id="sonho-doce-leite" disabled>Personalizar sonho</button>
+          </article>
+        </div>
+      </section>
+
+      <!-- 3. PERSONALIZAÇÃO: app.js abre o formulário e preenche as opções. -->
+      <section class="secao personalizacao" id="personalizacao" aria-labelledby="titulo-personalizacao">
+        <h2 id="titulo-personalizacao">Personalize seu produto</h2>
+        <h3 id="produto-selecionado" tabindex="-1" hidden>Produto selecionado</h3>
+        <p id="aviso-personalizacao">Clique em Personalizar no cardápio para escolher tamanho, sabor e adicionais.</p>
+
+        <form id="formulario-produto" action="#" method="post" aria-describedby="aviso-personalizacao" hidden>
+          <input type="hidden" id="produto-id" name="produto" value="">
+
+          <fieldset>
+            <legend id="legenda-apresentacao">Tamanho — obrigatório</legend>
+            <label id="rotulo-apresentacao" for="produto-tamanho">Escolha o tamanho</label>
+            <select id="produto-tamanho" name="tamanho" required>
+              <option value="">Selecione uma opção</option>
+            </select>
+          </fieldset>
+
+          <!-- Os grupos fixos da esfirra deram lugar a este espaço dinâmico. -->
+          <div id="produto-grupos"></div>
+
+          <div class="campo">
+            <label id="rotulo-quantidade" for="produto-quantidade">Quantidade de bandejas — obrigatório</label>
+            <input type="number" id="produto-quantidade" name="quantidade" value="1" min="1" max="20" step="1" required>
+          </div>
+          <div class="campo">
+            <label for="produto-observacao">Observação deste produto — opcional</label>
+            <textarea id="produto-observacao" name="observacaoProduto" rows="3" maxlength="300" placeholder="Escreva um detalhe sobre este produto."></textarea>
+          </div>
+          <p role="status" aria-live="polite" aria-atomic="true">Valor desta seleção: <strong id="produto-total">A calcular</strong></p>
+          <p id="produto-detalhe-total">Escolha as opções obrigatórias para calcular.</p>
+          <!-- O JS habilita este botão quando a seleção fica válida. -->
+          <button class="botao" type="submit" id="adicionar-carrinho" disabled>Adicionar ao carrinho</button>
+        </form>
+      </section>
+
+      <!-- 4. CARRINHO: o JavaScript também recupera os itens salvos neste navegador. -->
+      <section class="secao carrinho" id="carrinho" aria-labelledby="titulo-carrinho">
+        <h2 id="titulo-carrinho" tabindex="-1">Seu carrinho</h2>
+        <p id="mensagem-carrinho" role="status" aria-live="polite" aria-atomic="true"></p>
+        <p id="carrinho-vazio">Nenhum produto adicionado.</p>
+        <ul class="itens-carrinho" id="itens-carrinho"></ul>
+        <p>Quantidade de itens: <span id="carrinho-quantidade">0</span></p>
+        <p class="ajuda-carrinho">Uma caixa, porção ou bandeja conta como um item.</p>
+        <p id="aviso-armazenamento" role="status" aria-live="polite" aria-atomic="true"></p>
+        <dl class="valores-pedido">
+          <div><dt>Subtotal dos produtos</dt><dd id="carrinho-subtotal">R$ 0,00</dd></div>
+          <div><dt id="rotulo-taxa-carrinho">Entrega / retirada</dt><dd id="carrinho-entrega">A definir</dd></div>
+          <div><dt>Total do pedido</dt><dd id="carrinho-total">A definir</dd></div>
+        </dl>
+        <button class="botao" type="button" id="limpar-carrinho" disabled>Esvaziar carrinho</button>
+        <a href="#cardapio">Voltar ao cardápio</a>
+      </section>
+
+      <!-- 5. FINALIZAÇÃO: os campos de endereço dependem do tipo de recebimento. -->
+      <section class="secao" id="finalizacao" aria-labelledby="titulo-finalizacao">
+        <h2 id="titulo-finalizacao" tabindex="-1">Dados do pedido</h2>
+        <p id="aviso-formulario">Preencha seus dados e escolha como receber e pagar. Depois clique em Revisar pedido para conferir os detalhes.</p>
+
+        <form id="formulario-pedido" action="#" method="post" aria-describedby="aviso-formulario">
+          <fieldset>
+            <legend>Seus dados</legend>
+            <div class="campo">
+              <label for="cliente-nome">Nome — obrigatório</label>
+              <input type="text" id="cliente-nome" name="nome" autocomplete="name" maxlength="80" required>
+            </div>
+            <div class="campo">
+              <label for="cliente-telefone">Telefone com DDD — obrigatório</label>
+              <input type="tel" id="cliente-telefone" name="telefone" autocomplete="tel" maxlength="20" placeholder="(41) 9XXXX-XXXX" required>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Como deseja receber? — obrigatório</legend>
+            <div>
+              <input type="radio" id="tipo-retirada" name="tipoRecebimento" value="retirada" required checked>
+              <label id="rotulo-retirada" for="tipo-retirada">Retirada — grátis</label>
+            </div>
+            <div>
+              <input type="radio" id="tipo-entrega" name="tipoRecebimento" value="entrega">
+              <label id="rotulo-entrega" for="tipo-entrega">Entrega — taxa conforme o bairro</label>
+            </div>
+            <p id="informacao-retirada">O endereço exato para retirada será informado pela Bety.</p>
+            <p id="aviso-recebimento" role="status" aria-live="polite" aria-atomic="true">Escolha como deseja receber seu pedido.</p>
+          </fieldset>
+
+          <!-- hidden esconde; disabled desativa os campos e sua validação nativa. -->
+          <fieldset id="campos-entrega" hidden disabled>
+            <legend>Endereço de entrega</legend>
+            <div class="campo">
+              <label for="entrega-bairro">Bairro de Curitiba — obrigatório</label>
+              <select id="entrega-bairro" name="bairro">
+                <option value="">Selecione o bairro</option>
+              </select>
+            </div>
+            <div class="campo" id="campo-outro-bairro" hidden>
+              <label for="entrega-outro-bairro">Nome do outro bairro — obrigatório</label>
+              <input type="text" id="entrega-outro-bairro" name="outroBairro" maxlength="80" disabled>
+            </div>
+            <div class="campo">
+              <label for="entrega-rua">Rua — obrigatória</label>
+              <input type="text" id="entrega-rua" name="rua" maxlength="120">
+            </div>
+            <div class="campo">
+              <label for="entrega-numero">Número — obrigatório</label>
+              <input type="text" id="entrega-numero" name="numero" maxlength="20" placeholder="Ex.: 123 ou s/n">
+            </div>
+            <div class="campo">
+              <label for="entrega-complemento">Complemento — opcional</label>
+              <input type="text" id="entrega-complemento" name="complemento" maxlength="120" placeholder="Ex.: apartamento, bloco ou casa dos fundos.">
+            </div>
+            <div class="campo">
+              <label for="entrega-referencia">Ponto de referência — opcional</label>
+              <input type="text" id="entrega-referencia" name="referencia" maxlength="150">
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Pagamento</legend>
+            <div class="campo">
+              <label for="pedido-pagamento">Forma de pagamento — obrigatória</label>
+              <select id="pedido-pagamento" name="pagamento" required>
+                <option value="">Selecione uma opção</option>
+              </select>
+            </div>
+            <div class="campo" id="campo-troco" hidden>
+              <label for="pedido-troco">Vai pagar com quanto, em reais? — opcional</label>
+              <input type="text" id="pedido-troco" name="trocoPara" inputmode="decimal" maxlength="12" placeholder="Ex.: 100,00" aria-describedby="ajuda-troco" disabled>
+              <p id="ajuda-troco">Informe o valor da nota, não o troco desejado. Use 100 ou 100,00, sem separar milhares. Deixe vazio se não precisar de troco.</p>
+            </div>
+            <p>Esta escolha apenas informa a forma de pagamento; o site não realiza cobranças.</p>
+          </fieldset>
+
+          <div class="campo">
+            <label for="pedido-observacao">Observação geral — opcional</label>
+            <textarea id="pedido-observacao" name="observacaoPedido" rows="3" maxlength="500" placeholder="Ex.: avisar ao chegar."></textarea>
+          </div>
+          <p>O pedido só será confirmado após a resposta da Bety.</p>
+          <p id="aviso-validacao" role="status" aria-live="polite" aria-atomic="true"></p>
+          <button class="botao" type="submit" id="revisar-pedido" disabled>Revisar pedido</button>
+        </form>
+      </section>
+
+      <!-- 6. REVISÃO: o JavaScript revela este bloco após validar o pedido. -->
+      <section class="secao" id="revisao" aria-labelledby="titulo-revisao" hidden>
+        <h2 id="titulo-revisao" tabindex="-1">Revise antes de enviar</h2>
+        <div id="resumo-pedido"></div>
+        <label for="mensagem-whatsapp">Texto preparado para o pedido</label>
+        <textarea id="mensagem-whatsapp" rows="12" readonly></textarea>
+        <p id="orientacao-whatsapp">Ao abrir o WhatsApp, confira a conversa e toque em Enviar. Aguarde a confirmação da Bety; abrir a conversa não confirma o pedido.</p>
+        <p id="aviso-whatsapp" role="status" aria-live="polite" aria-atomic="true"></p>
+        <button class="botao" type="button" id="editar-pedido" disabled>Voltar e editar</button>
+        <button class="botao" type="button" id="copiar-pedido" aria-describedby="aviso-whatsapp" disabled>Copiar pedido</button>
+        <button class="botao botao-whatsapp" type="button" id="enviar-whatsapp" aria-describedby="orientacao-whatsapp aviso-whatsapp" disabled>Abrir WhatsApp com o pedido</button>
+      </section>
+    </main>
+
+    <!-- 7. RODAPÉ: o contato será preenchido a partir de config.js. -->
+    <footer class="rodape" id="informacoes">
+      <div class="container">
+        <h2>Informações da loja</h2>
+        <p id="nome-loja-rodape">Delícias da Bety</p>
+        <address id="endereco-loja-rodape">Boqueirão, Curitiba — PR. Endereço para retirada a confirmar.</address>
+        <p id="contato-whatsapp">WhatsApp da loja: a definir.</p>
+        <p>Consulte a disponibilidade e aguarde a confirmação da Bety pelo WhatsApp.</p>
+        <a href="#topo">Voltar ao início</a>
+      </div>
+    </footer>
+  </body>
+</html>
